@@ -12,7 +12,13 @@ class Panoviewer extends React.Component {
     }
 
     componentDidMount() {
-        const renderer = new WebGLRenderer();
+        const {
+            canvas
+        } = this;
+
+        const renderer = new WebGLRenderer({
+            canvas: canvas,
+        });
 
         this.setState({
             renderer: renderer,
@@ -20,9 +26,11 @@ class Panoviewer extends React.Component {
     }
 
     _canvasRef = el => {
-        this.setState({
-            canvas: el
-        });
+        const {
+            canvas
+        } = this;
+        if (canvas !== el)
+            this.canvas = el;
     };
 
     render() {
@@ -33,8 +41,6 @@ class Panoviewer extends React.Component {
         const {
             src = 'http://o00o.me/photos/kyiv.jpg',
         } = this.props;
-
-        console.log(canvas, renderer);
 
         return (
             <canvas
